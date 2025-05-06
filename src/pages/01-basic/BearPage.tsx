@@ -1,3 +1,4 @@
+import { useShallow } from "zustand/shallow";
 import { WhiteCard } from "../../components";
 import { useBearStore } from "../../stores";
 
@@ -12,6 +13,7 @@ export const BearPage = () => {
         <BlackBears />
         <PolarBears />
         <PandaBears />
+        <BearsDisplay />
       </div>
     </>
   );
@@ -61,6 +63,27 @@ export const PandaBears = () => {
         <span className="text-3xl mx-2 lg:mx-10"> {pandaBears} </span>
         <button onClick={() => increasePandaBears(-1)}>-1</button>
       </div>
+    </WhiteCard>
+  );
+};
+
+export const BearsDisplay = () => {
+  const bears = useBearStore(useShallow((state) => state.bears));
+  const doNothing = useBearStore((state) => state.doNothing);
+  const addBear = useBearStore((state) => state.addBear);
+  const clearBears = useBearStore((state) => state.clearBears);
+
+  return (
+    <WhiteCard>
+      <h1>Osos</h1>
+      <button onClick={doNothing}>No hace algo</button>
+      <button className="mt-2" onClick={addBear}>
+        Agregar Oso
+      </button>
+      <button className="mt-2" onClick={clearBears}>
+        Limpiar Osos
+      </button>
+      <pre>{JSON.stringify(bears, null, 2)}</pre>
     </WhiteCard>
   );
 };
